@@ -12,7 +12,7 @@ This is a good starting point for your next project that needs firebase auth
 
 - Clone the project with 
 ```
-git clone https://github.com/IgorBayerl/react-vite-tailwind-firebase-auth-template.git
+git clone https://github.com/kodcuserkan/vite-ts-firebase-tailwind-starter.git
 ```
 - Navigate to the directory
 ```
