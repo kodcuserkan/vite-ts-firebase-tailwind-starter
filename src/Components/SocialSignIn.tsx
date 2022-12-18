@@ -1,4 +1,4 @@
-import { FaGithub, FaGoogle } from 'react-icons/fa'
+import { FaApple, FaGithub, FaGoogle } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -8,7 +8,7 @@ export interface ISocialSignInProps {
 }
 
 export function SocialSignIn({ enabled = true, setError }: ISocialSignInProps) {
-  const { googleSignin, githubSignin } = useAuth()
+  const { googleSignin, githubSignin, appleSignin } = useAuth()
   const navigate = useNavigate()
 
   async function handleGoogleLogin(): Promise<void> {
@@ -20,6 +20,18 @@ export function SocialSignIn({ enabled = true, setError }: ISocialSignInProps) {
       setError('Failed to log in with Google')
     }
   }
+
+  async function handleAppleLogin(): Promise<void> {
+    try {
+      setError('')
+      await appleSignin()
+      navigate('/')
+    } catch (err) {
+      console.log("Failed to log in with IOS => ", err);
+      setError('Failed to log in with IOS')
+    }
+  }
+
 
   async function handleGithubLogin(): Promise<void> {
     try {
@@ -40,6 +52,15 @@ export function SocialSignIn({ enabled = true, setError }: ISocialSignInProps) {
       >
         <span className="inset-y-0 left-0 flex items-center ">
           <FaGoogle className="h-7 w-7  text-gray-500 group-hover:text-gray-600" />
+        </span>
+      </button>
+      <button
+        onClick={handleAppleLogin}
+        disabled={!enabled}
+        className=" min-w-fit relative flex flex-grow  justify-center rounded-md border border-transparent bg-gray-200 py-2  px-9 text-sm font-medium transition-colors hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      >
+        <span className="inset-y-0 left-0 flex items-center ">
+          <FaApple className="h-7 w-7  text-gray-500 group-hover:text-gray-600" />
         </span>
       </button>
       {/* <button

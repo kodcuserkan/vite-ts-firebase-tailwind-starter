@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   GithubAuthProvider,
+  OAuthProvider,
 } from 'firebase/auth'
 import ProgressBar from '../Components/ProgressBar'
 
@@ -19,7 +20,7 @@ export function useAuth(): any {
 }
 
 export function AuthProvider({ children }: IAuthProviderProps): JSX.Element {
-  const [currentUser, setCurrentUser] = useState<any>()
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(true)
 
   function signup(email: string, password: string): Promise<any> {
@@ -35,6 +36,13 @@ export function AuthProvider({ children }: IAuthProviderProps): JSX.Element {
     const provider = new GithubAuthProvider()
     return signInWithPopup(auth, provider)
   }
+
+  function appleSignin(): Promise<any> {
+    const provider = new OAuthProvider('apple.com');
+    provider.addScope('email');
+    return signInWithPopup(auth, provider)
+  }
+
 
   function login(email: string, password: string): Promise<any> {
     return auth.signInWithEmailAndPassword(email, password)
@@ -75,6 +83,7 @@ export function AuthProvider({ children }: IAuthProviderProps): JSX.Element {
     resetPassword,
     updateEmail,
     updatePassword,
+    appleSignin
   }
 
   return (
