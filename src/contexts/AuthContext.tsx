@@ -5,6 +5,8 @@ import {
   signInWithPopup,
   GithubAuthProvider,
 } from 'firebase/auth'
+import ProgressBar from '../Components/ProgressBar'
+
 
 interface IAuthProviderProps {
   children: JSX.Element
@@ -77,6 +79,7 @@ export function AuthProvider({ children }: IAuthProviderProps): JSX.Element {
 
   return (
     <AuthContext.Provider value={value}>
+      <ProgressBar isAnimating={loading} />
       {!loading && children}
     </AuthContext.Provider>
   )

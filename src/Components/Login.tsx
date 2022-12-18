@@ -26,8 +26,12 @@ export default function Login() {
       setLoading(true)
       await login(emailRef.current?.value, passwordRef.current?.value)
       navigate('/')
-    } catch {
-      setError('Failed to log in')
+    } catch(e: any) {
+      let message= 'Failed to log in';
+      if (e?.message) {
+        message = e.message.replace(/Firebase: /g,'');
+      }
+      setError(message)
     }
 
     setLoading(false)

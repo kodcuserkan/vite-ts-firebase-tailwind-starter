@@ -27,8 +27,11 @@ export default function Signup() {
       setLoading(true)
       await signup(emailRef.current?.value, passwordRef.current?.value)
       navigate('/')
-    } catch ({message='Failed to create an account'}) {
-      setError(message)
+    } catch (e) {
+      let message
+      if (e instanceof Error) message = e.message
+      else message = String(error)
+      setError(message.replace(/Firebase: /g,'') || 'Failed to create an account')
     }
 
     setLoading(false)
